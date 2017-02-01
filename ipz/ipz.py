@@ -6,9 +6,11 @@ import subprocess as sub
 ip_pattern=r"(?:[0-9]{1,3}\.){3}[0-9]{1,3}"
 api_1="http://ipinfo.io/ip"
 
-def local_ip():
+def local_ip(DEBUG=False):
     '''
     return local ip of computer in windows by socket module and in unix with hostname command in shell
+    :param DEBUG: Flag for debug mode
+    :type DEBUG : bool
     :return: local ip as string
     '''
     try:
@@ -26,12 +28,15 @@ def local_ip():
             return "Error"
 
     except Exception as e:
-        print(e)
+        if DEBUG==True:
+            print(str(e))
         return "Error"
 
-def global_ip():
+def global_ip(DEBUG=False):
     '''
-    retur ip with by http://ipinfo.io/ip api
+    return ip with by http://ipinfo.io/ip api
+    :param DEBUG:Flag for debug mode
+    :type DEBUG:bool
     :return: global ip as string
     '''
     try:
@@ -40,6 +45,8 @@ def global_ip():
         ip_list=re.findall(ip_pattern,response.text)
         new_session.close()
         return ip_list[0]
-    except:
+    except Exception as e:
+        if DEBUG==True:
+            print(str(e))
         return "Error"
 
